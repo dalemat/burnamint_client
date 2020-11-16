@@ -1,5 +1,8 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import Form from "../components/Form";
+import Header from "../components/Header"
+import Hero from "../components/Hero";
 import { loadDetails, burnamintAddress, oldTokenAddress, newTokenAddress } from "../scripts";
 import styles from "../styles/Home.module.css";
 
@@ -8,6 +11,7 @@ export default function Home() {
   const {connected, burnamintContract, oldTokenDecimals, address, oldTokenBalance, newTokenBalance, oldTokenAllowance, oldToken, newToken} = details
   const [burnValue, setBurnValue] = useState(0)
   const enoughAllowance = oldTokenAllowance >= burnValue
+  const [conn, setConn] = useState(false)
   const handleApprove = async () => {
     const value = burnValue*10**oldTokenDecimals
     await oldToken.approve(burnamintAddress, String(value))
@@ -27,13 +31,21 @@ export default function Home() {
 
   console.log({enoughAllowance, oldTokenBalance, burnValue, oldTokenAllowance})
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>Burnamint</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div>
+      <main className="w-full h-screen max-w-1400 mr-auto ml-auto">
+        <Header />
+        {
+          conn
+          ? <Form />
+          : <Hero setConn={setConn} />
+        }
+        
+        
+        {/* <div>
           <div>Address: {address}</div>
           <div>Old Token Balance: {oldTokenBalance}</div>
           <div>New Token Balance: {newTokenBalance}</div>
@@ -59,8 +71,8 @@ export default function Home() {
                </>
             }
           </div>
-        </form>
+        </form> */}
       </main>
-    </div>
+    </>
   );
 }

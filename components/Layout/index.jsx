@@ -1,7 +1,7 @@
 export default function Layout({children}){
     return (
-        <main className="bg-yellow-600">
+        <div className="bg-gradient-to-b from-white via-green-100 to-green-100">
             {children}
-        </main>
+        </div>
     )
 }
