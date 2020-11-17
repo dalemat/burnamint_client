@@ -1,13 +1,30 @@
 @tailwind base;
 @tailwind components;
 /* Stop purging. */
-
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  font-family: 'Raleway', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+
+* {
+  -webkit-animation: fade-in 0.8s ease-out forwards;
+  animation: fade-in 0.8s ease-out forwards;
+  opacity: 0;
+  -webkit-transform: translateY(0.2em);
+  transform: translateY(0.2em);
+}
+
+@keyframes fade-in {
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
 }
 
 a {
@@ -20,6 +37,10 @@ select, input {
   -moz-appearance: none;
   text-indent: 1px;
   text-overflow: '';
+}
+
+textarea:focus, input:focus, button:focus, button:active{
+  outline: none;
 }
 
 /* Firefox */

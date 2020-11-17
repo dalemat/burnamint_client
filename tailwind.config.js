@@ -15,6 +15,7 @@ module.exports = {
       width: {
         '300': '300px',
         '690': '690px',
+        '710': '710px',
         '800': '800px',
       },
       maxWidth: {
@@ -22,6 +23,7 @@ module.exports = {
       },
       colors: {
         'greenish': '#1CA691',
+        'fade-green': '#48A8A6',
         'brownish': '#525252',
         'light-brown': '#8C8C8C',
         'thin-brown': '#BDBDBD',
