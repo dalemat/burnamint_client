@@ -3,7 +3,7 @@ export default function Form(){
         <>
         <form onSubmit={(e)=>e.preventDefault()} className="flex flex-wrap shadow md:py-16 rounded-md bg-white w-full p-6 mt-20 md:w-800 m-auto">
             <div className="md:flex md:flex-wrap md:w-full md:justify-between">
-                <InputField labelText="Burn Old Token" textColor="red-400" />
+                <InputField labelText="Burn Old Token" textColor="redish" />
                 <div className="flex w-full justify-center pt-6 pb-4 transform rotate-90 md:rotate-0 md:w-1/5"><img className="h-6 mt-4" src="/swapicon.png" alt="swap" /></div>
                 <InputField labelText="Mint New Token" textColor="greenish" />
             </div>

@@ -23,6 +23,7 @@ module.exports = {
       },
       colors: {
         'greenish': '#1CA691',
+        'redish': '#FF7880',
         'fade-green': '#48A8A6',
         'brownish': '#525252',
         'light-brown': '#8C8C8C',
