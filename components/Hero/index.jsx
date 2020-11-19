@@ -1,6 +1,6 @@
 const mainText = "Burn Old Tokens and Get New Tokens Instantly"
 const mainDesc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor natoque lorem faucibus et posuere non. Massa cras luctus risus, donec aliquet eu, risus. Nibh bibendum viverra ut est."
-export default function({setConn}){
+export default function Hero({handleConnect}){
     return (
         <div className="flex flex-wrap justify-center items-center md:mt-20">
             <h1 className="text-center text-brownish text-2xl w-300 md:w-710 md:text-5xl font-bold leading-tight">
@@ -11,7 +11,7 @@ export default function({setConn}){
                 <div className="bg-white rounded-md shadow p-4 hover:shadow-lg cursor-pointer"><img src="/metamask.png" alt="metamask"/></div>
             </div>
             <div className="text-light-brown w-full text-center md:text-xl">Connect your wallet to mint</div>
-            <button onClick={()=>setConn(true)} className="bg-greenish hover:bg-fade-green text-white rounded-md shadow-md hover:shadow-lg h-10 md:h-16 mt-6 px-8 md:px-16 md:mt-8">CONNECT METAMASK</button>
+            <button onClick={handleConnect} className="bg-greenish hover:bg-fade-green text-white rounded-md shadow-md hover:shadow-lg h-10 md:h-16 mt-6 px-8 md:px-16 md:mt-8">CONNECT METAMASK</button>
         </div>
     )
 }

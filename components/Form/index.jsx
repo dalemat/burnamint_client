@@ -1,36 +1,62 @@
-export default function Form(){
+import { useState } from "react"
+import { loadDetails, burnamintAddress, oldTokenAddress, newTokenAddress } from "../../scripts";
+
+
+export default function Form({details, setDetails}){
+    const {burnamintContract, oldTokenDecimals, address, oldTokenBalance, newTokenBalance, oldTokenAllowance, oldToken, newToken} = details
+    const [burnValue, setBurnValue] = useState('')
+    const enoughAllowance = oldTokenAllowance >= burnValue
+
+    const handleApprove = async () => {
+      const value = burnValue*10**oldTokenDecimals
+      await oldToken.approve(burnamintAddress, String(value))
+      const filter = oldToken.filters.Approval(address, burnamintAddress, null)
+      oldToken.on(filter, async () => {
+        await loadDetails(setDetails)(false)
+      })
+    }
+    const handleBurn = async () => {
+      const value = burnValue*10**oldTokenDecimals
+      await burnamintContract.burnamint(oldTokenAddress, newTokenAddress, address, String(value))
+      const filter = burnamintContract.filters.BurnaMint(oldTokenAddress, newTokenAddress, address, null, null)
+      burnamintContract.on(filter, async () => {
+        await loadDetails(setDetails)(false)
+      })
+    }
+    console.log({enoughAllowance, oldTokenAllowance, burnValue})
     return (
         <>
         <form onSubmit={(e)=>e.preventDefault()} className="flex flex-wrap shadow md:py-16 rounded-md bg-white w-full p-6 mt-20 md:w-800 m-auto">
             <div className="md:flex md:flex-wrap md:w-full md:justify-between">
-                <InputField labelText="Burn Old Token" textColor="redish" />
+                <InputField value={burnValue} handleChange={setBurnValue} col="red400" borderCol="red400border" labelText="Burn Old Token" textColor="red-400" tokenName="Old Token" tokenValue={oldTokenBalance} />
                 <div className="flex w-full justify-center pt-6 pb-4 transform rotate-90 md:rotate-0 md:w-1/5"><img className="h-6 mt-4" src="/swapicon.png" alt="swap" /></div>
-                <InputField labelText="Mint New Token" textColor="greenish" />
+                <InputField value={Number(burnValue)/10} col="green400" borderCol="green400border" disabled labelText="Mint New Token" textColor="greenish" tokenName="New Token" tokenValue={newTokenBalance} />
             </div>
         </form>
         <div className="flex flex-wrap justify-between w-full px-6 mt-10 md:w-800 m-auto">
-                <Button text="Approve" bgActive="greenish" bgInactive="white" disabled={false} />
-                <Button text="Mint" bgActive="greenish" bgInactive="white" disabled={true} />
+                <Button onClick={handleApprove} text="Approve" bgActive="greenish" bgInactive="white" disabled={(enoughAllowance||oldTokenBalance<burnValue)} />
+                <Button onClick={handleBurn} disabled={(!enoughAllowance&&Number(burnValue)>oldTokenAllowance)||burnValue==""} text="Mint" bgActive="greenish" bgInactive="white" />
         </div>
         </>
     )
 }
 
-function InputField({labelText, textColor}){
+function InputField({labelText, disabled=false, textColor, tokenName="", tokenValue=0, handleChange, value, col, borderCol}){
     return (
-        <label className={`w-full text-${textColor} inline-block font-medium md:w-2/5`}>
+        <label className={`w-full text-${textColor} inline-block font-bold md:w-2/5 ${col}`}>
                 {labelText}
-                <input className={`w-full border rounded-md h-10 pl-2 text-xl mt-2 outline-none text-light-brown border-${textColor}`} placeholder="0.00" type="number"/>
+                <input value={value} onChange={(e)=>handleChange(e.target.value)} disabled={disabled} className={`w-full border rounded-md h-10 pl-2 text-xl mt-2 outline-none text-light-brown border-${textColor} ${borderCol}`} placeholder="0.00" type="number"/>
+                <div className="font-normal text-light-brown mt-3">{tokenName} Balance: {tokenValue}</div>
         </label>
     )
 }
 
-function Button({text, bgActive, bgInactive, disabled}){
+function Button({text, bgActive, bgInactive, disabled, onClick}){
     const activeColor = disabled ? bgInactive : bgActive
     const textColor = disabled ? bgActive : bgInactive
     const hoverColor = disabled ? "" : "hover:bg-fade-green "
     return (
-        <button className={`h-10 md:h-12 shadow-md hover:shadow-lg ${hoverColor} rounded-md bg-${activeColor} border border-${bgActive} text-${textColor} w-32 md:w-5/12 inline-block`}>
+        <button disabled={disabled} onClick={onClick} className={`h-10 md:h-12 shadow-md hover:shadow-lg ${hoverColor} rounded-md bg-${activeColor} border border-${bgActive} text-${textColor} w-32 md:w-5/12 inline-block`}>
             {text}
         </button>
     )
