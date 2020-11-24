@@ -43,6 +43,11 @@ export default class ETHAPI{
   getSigner() {
     return this.provider.getSigner()
   }
+
+  async getNet() {
+    const net = (await (await this.provider).getNetwork()).name
+    return net
+  }
   
   getAddress() {
     return this.getSigner().getAddress()

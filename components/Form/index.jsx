@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { loadDetails, burnamintAddress, oldTokenAddress, newTokenAddress } from "../../scripts";
+import { loadDetails } from "../../scripts";
 
 
 export default function Form({details, setDetails}){
-    const {burnamintContract, oldTokenDecimals, address, oldTokenBalance, newTokenBalance, oldTokenAllowance, oldToken, newToken} = details
+    const {burnamintContract, burnamintAddress, oldTokenAddress, newTokenAddress, oldTokenDecimals, address, oldTokenBalance, newTokenBalance, oldTokenAllowance, oldToken} = details
     const [burnValue, setBurnValue] = useState('')
     const enoughAllowance = oldTokenAllowance >= burnValue
 
