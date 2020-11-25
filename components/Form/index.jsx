@@ -1,11 +1,12 @@
 import { useState } from "react"
-import { loadDetails, burnamintAddress, oldTokenAddress, newTokenAddress } from "../../scripts";
+import { loadDetails } from "../../scripts";
+import { ethers } from 'ethers'
 
 
 export default function Form({details, setDetails}){
-    const {burnamintContract, oldTokenDecimals, address, oldTokenBalance, newTokenBalance, oldTokenAllowance, oldToken, newToken} = details
+    const {burnamintContract, burnamintAddress, oldTokenAddress, newTokenAddress, oldTokenDecimals, address, oldTokenBalance, newTokenBalance, oldTokenAllowance, oldToken, isZero, ratio, inversed} = details
     const [burnValue, setBurnValue] = useState('')
-    const enoughAllowance = oldTokenAllowance >= burnValue
+    const enoughAllowance = Number(oldTokenAllowance) >= Number(burnValue)
 
     const handleApprove = async () => {
       const value = burnValue*10**oldTokenDecimals
@@ -17,20 +18,23 @@ export default function Form({details, setDetails}){
     }
     const handleBurn = async () => {
       const value = burnValue*10**oldTokenDecimals
-      await burnamintContract.burnamint(oldTokenAddress, newTokenAddress, address, String(value))
+      isZero
+       ? await burnamintContract.burnamint(oldTokenAddress, newTokenAddress, inversed, address, String(value), {value: ethers.utils.parseEther(burnValue)})
+       : await burnamintContract.burnamint(oldTokenAddress, newTokenAddress, inversed, address, String(value))
       const filter = burnamintContract.filters.BurnaMint(oldTokenAddress, newTokenAddress, address, null, null)
       burnamintContract.on(filter, async () => {
         await loadDetails(setDetails)(false)
       })
     }
     console.log({enoughAllowance, oldTokenAllowance, burnValue})
+    const mintValue = inversed ? Number(burnValue)*ratio : Number(burnValue)/ratio
     return (
         <>
         <form onSubmit={(e)=>e.preventDefault()} className="flex flex-wrap shadow md:py-16 rounded-md bg-white w-full p-6 mt-20 md:w-800 m-auto">
             <div className="md:flex md:flex-wrap md:w-full md:justify-between">
                 <InputField value={burnValue} handleChange={setBurnValue} col="red400" borderCol="red400border" labelText="Burn Old Token" textColor="red-400" tokenName="Old Token" tokenValue={oldTokenBalance} />
                 <div className="flex w-full justify-center pt-6 pb-4 transform rotate-90 md:rotate-0 md:w-1/5"><img className="h-6 mt-4" src="/swapicon.png" alt="swap" /></div>
-                <InputField value={Number(burnValue)/10} col="green400" borderCol="green400border" disabled labelText="Mint New Token" textColor="greenish" tokenName="New Token" tokenValue={newTokenBalance} />
+                <InputField value={mintValue} col="green400" borderCol="green400border" disabled labelText="Mint New Token" textColor="greenish" tokenName="New Token" tokenValue={newTokenBalance} />
             </div>
         </form>
         <div className="flex flex-wrap justify-between w-full px-6 mt-10 md:w-800 m-auto">

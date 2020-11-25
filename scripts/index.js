@@ -1,22 +1,24 @@
 import erc20TokenABI from "./tokenABI"
 import burnamintABI from "./burnamintABI"
 import {ethAPI} from './eth'
+import config from '../config.json'
 
-export const oldTokenAddress = "0x6A7D7BcE0424F369082c4b85Bc3A72DB4Bf85e09"
-export const newTokenAddress = "0xc1Ab6FeF8E9Da2f461B9589722F1b1E58D06C211"
-export const burnamintAddress = "0x9d8A26611ac917F9BD4C06414DB80a60Ad452137"
-
+export const zeroAddress = "0x0000000000000000000000000000000000000000"
 export const loadDetails = (callback) => async (reconnect=true) => {
     reconnect&&await ethAPI.connect()
+    console.log(await ethAPI.getNet())
+    const {contractAddress: burnamintAddress, oldTokenAddress, newTokenAddress, ratio, inversed} = config[await ethAPI.getNet()]
     const address = await ethAPI.getAddress()
     const oldToken = await ethAPI.contractInterface({contractABI: erc20TokenABI, contractAddress: oldTokenAddress})
     const newToken = await ethAPI.contractInterface({contractABI: erc20TokenABI, contractAddress: newTokenAddress})
     const burnamintContract = await ethAPI.contractInterface({contractABI: burnamintABI, contractAddress: burnamintAddress})
-    const oldTokenDecimals = await oldToken.decimals()
-    const oldTokenBalance = (await oldToken.balanceOf(address)) / 10**(oldTokenDecimals)
+    const isZero = oldTokenAddress === zeroAddress
+    const oldTokenDecimals = isZero ? 18 : await oldToken.decimals()
+    const _oldTokenBalance =  isZero ? await ethAPI.getAddressBalance() : (await oldToken.balanceOf(address))
+    const oldTokenBalance = _oldTokenBalance / 10**(oldTokenDecimals)
     const newTokenBalance = (await newToken.balanceOf(address)) / 10**(await newToken.decimals())
 
-    const oldTokenAllowance = (await oldToken.allowance(address,burnamintAddress)) / 10**(await oldToken.decimals())
+    const oldTokenAllowance = isZero ? oldTokenBalance : (await oldToken.allowance(address,burnamintAddress)) / 10**(await oldToken.decimals())
 
     return callback({
         address,
@@ -28,5 +30,11 @@ export const loadDetails = (callback) => async (reconnect=true) => {
         connected: true,
         burnamintContract,
         oldTokenDecimals,
+        burnamintAddress,
+        oldTokenAddress,
+        newTokenAddress,
+        ratio,
+        inversed,
+        isZero,
     })
 }

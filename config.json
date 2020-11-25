@@ -1,0 +1,50 @@
+{
+    "mainnet": {
+        "id": "1",
+        "contractAddress": "",
+        "oldTokenAddress": "",
+        "newTokenAddress": "",
+        "inversed": false,
+        "ratio": 10
+    },
+    "kovan": {
+        "id": "42",
+        "contractAddress": "",
+        "oldTokenAddress": "",
+        "newTokenAddress": "",
+        "inversed": false,
+        "ratio": 10
+    },
+    "ropsten": {
+        "id": "3",
+        "contractAddress": "",
+        "oldTokenAddress": "",
+        "newTokenAddress": "",
+        "inversed": false,
+        "ratio": 10
+    },
+    "goerli": {
+        "id": "5",
+        "contractAddress": "0x9d8A26611ac917F9BD4C06414DB80a60Ad452137",
+        "oldTokenAddress": "0x6A7D7BcE0424F369082c4b85Bc3A72DB4Bf85e09",
+        "newTokenAddress": "0xc1Ab6FeF8E9Da2f461B9589722F1b1E58D06C211",
+        "inversed": false,
+        "ratio": 10
+    },
+    "rinkeby": {
+        "id": "4",
+        "contractAddress": "",
+        "oldTokenAddress": "",
+        "newTokenAddress": "",
+        "inversed": false,
+        "ratio": 10
+    },
+    "unknown": {
+        "id": "4",
+        "contractAddress": "0x0324063F4012a757fFF58A5CAa1611658bfdb8Ba",
+        "oldTokenAddress": "0x0000000000000000000000000000000000000000",
+        "newTokenAddress": "0x092f3aAf8bE79F3DA4cE812fA14b1D544CE2de3e",
+        "inversed": true,
+        "ratio": 10
+    }
+}
