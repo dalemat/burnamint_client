@@ -52,6 +52,10 @@ export default class ETHAPI{
   getAddress() {
     return this.getSigner().getAddress()
   }
+  
+  getAddressBalance() {
+    return this.getSigner().getBalance()
+  }
 
   toBigNumber (number) {
     return ethers.utils.parseEther(number)
