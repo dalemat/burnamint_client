@@ -25,7 +25,7 @@
     },
     "goerli": {
         "id": "5",
-        "contractAddress": "0x9d8A26611ac917F9BD4C06414DB80a60Ad452137",
+        "contractAddress": "0xfE08A26060f54f1AB2ceA49cDeBcCA3912dBb7Ec",
         "oldTokenAddress": "0x6A7D7BcE0424F369082c4b85Bc3A72DB4Bf85e09",
         "newTokenAddress": "0xc1Ab6FeF8E9Da2f461B9589722F1b1E58D06C211",
         "inversed": false,
