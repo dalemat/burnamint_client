@@ -1,5 +1,5 @@
 const mainText = "Burn Dalc Erc20 Tokens and Get Dfine Tokens. Ratio 10:1"
-const mainDesc = " 70,000 Dfine tokens reserved for the swap."
+const mainDesc = " 80,000 Dfine tokens reserved for the swap."
 export default function Hero({handleConnect}){
     return (
         <div className="flex flex-wrap justify-center items-center md:mt-20">
