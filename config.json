@@ -40,11 +40,11 @@
         "ratio": 10
     },
     "unknown": {
-        "id": "4",
-        "contractAddress": "0x0324063F4012a757fFF58A5CAa1611658bfdb8Ba",
-        "oldTokenAddress": "0x0000000000000000000000000000000000000000",
-        "newTokenAddress": "0x092f3aAf8bE79F3DA4cE812fA14b1D544CE2de3e",
-        "inversed": true,
-        "ratio": 10
+        "id": "97",
+        "contractAddress": "0x9948BCd4A115E9f9396BFE8b401cc70cc19e9f1E",
+        "oldTokenAddress": "0xf4b15d6d0d8f1b26d81226ff2a55949943acd883",
+        "newTokenAddress": "0xe836e939aa7c26d11cf7452b14feb3ef60a6673c",
+        "inversed": false,
+        "ratio": 100
     }
 }
